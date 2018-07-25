@@ -35,6 +35,13 @@ var SchemaObject = {
 
     let example = examples[vnode.attrs.model]
 
+    if (!props && vnode.attrs.model == 'core') {
+      props = schema.definitions
+
+    } else if (!props) {
+      return m('.content', 'no props')
+    }
+
     return m('div', [
       m('.content', schema.description),
       Object.keys(props).map(p => {
