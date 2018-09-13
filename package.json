@@ -1,19 +1,27 @@
 {
-  "name": "schema-explorer",
+  "name": "opencrypto-schema-explorer",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
   "scripts": {
-    "start": "webpack src/index.js --output bin/app.js -d --watch"
+    "start": "npm run-script watch",
+    "build": "rm -rf docs && parcel build src/index.html -d docs && cp -r src/public/** docs",
+    "build-gitadd": "git add docs",
+    "watch": "parcel src/index.html",
+    "serve": "parcel serve src/index.html"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "webpack": "^4.8.3",
-    "webpack-cli": "^2.1.3"
-  },
+  "devDependencies": {},
+  "browserslist": [
+    "last 1 Chrome version"
+  ],
+  "pre-commit": [
+    "build",
+    "build-gitadd"
+  ],
   "dependencies": {
     "mithril": "^1.1.6",
-    "showdown": "^1.8.6"
+    "parcel": "^1.9.7",
+    "pre-commit": "^1.2.2"
   }
 }

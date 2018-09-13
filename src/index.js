@@ -1,18 +1,11 @@
-var m = require('mithril')
-var Layout = require('./views/Layout')
+const Layout = require('./components/Layout')
 
-var SchemaController = require('./views/Schema')
-var HomepageController = require('./views/Homepage')
+const Homepage = require('./components/Homepage')
+const Schema = require('./components/Schema')
 
-m.route(document.getElementById('content'), "/", {
-  "/": {
-    render: function(vnode) {
-      return m(Layout, m(HomepageController, vnode.attrs))
-    }
-  },
-  "/schema/:model": {
-    render: function(vnode) {
-      return m(Layout, m(SchemaController, vnode.attrs))
-    }
-  }
+const root = document.getElementById('schema-explorer')
+
+m.route(root, '/', {
+  '/': { render: (vnode) => m(Layout, m(Homepage, vnode.attrs)) },
+  '/model/:id': { render: (vnode) => m(Layout, m(Schema, vnode.attrs)) }
 })

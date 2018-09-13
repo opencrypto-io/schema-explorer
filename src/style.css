@@ -1,0 +1,83 @@
+body {
+  background: #F8F8F8;
+}
+
+.green { 
+  color: #00c718;
+}
+.thin {
+  font-weight: 300;
+}
+
+.navbar.transparent {
+  background-color: transparent;
+}
+
+.level.pageNavBar {
+  padding-top: 0.5em;
+  padding-bottom: 0.1em;
+  min-height: 3em;
+}
+
+#subbar {
+  border-bottom: 2px solid silver;
+}
+
+#navbar {
+  padding: 0.7rem 0;
+  border-bottom: 2px solid #00C718;
+  background-color: white;
+}
+
+a.navbar-item:hover, a:hover {
+  color: black !important;
+}
+
+#navbar .navbar-start .navbar-item {
+  font-size: 1.1rem;
+}
+
+#navbar .navbar-item.current {
+  font-weight: bold;
+}
+
+#logo-text { 
+  padding-left: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+#logo {
+  width: 32px;
+  height: 32px;
+  background-image: url(./opencrypto.svg);
+}
+
+#subbar .navbar-item.selected {
+  font-weight: bold;
+}
+
+#page {
+  padding-top: 1em;
+}
+
+.custom-box {
+  background-color: #FFFFFF;
+  box-shadow: 0 0 3px 0 rgba(33,27,27,0.2);
+ 	border-radius: 4px;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+.props {
+  margin-top: 1.5em;
+}
+
+.example {
+  margin-top: 1em;
+  background-color: #F8F8F8;
+  box-shadow: 0 1px 3px 0 rgba(33,27,27,0.2);
+  border-radius: 4px;
+  padding: 1em;
+}
+ 
