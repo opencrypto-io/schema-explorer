@@ -74,15 +74,18 @@ module.exports = {
                 }
                 return arr.concat(models)
               })()),
-              m('.navbar-end', [
-                m('.navbar-item', [
+              m('.navbar-end', (() => {
+                if (!this.bundle) {
+                  return null
+                }
+                return m('.navbar-item', [
                   m('div.select.is-rounded', [
                     m('select', [
-                      m('option', 'v0.9.1 (latest)')
+                      m('option', this.bundle.isLocal ? `v${this.bundle.meta.version} (local)` : `v${this.bundle.meta.version} (latest)`)
                     ])
                   ])
                 ])
-              ])
+              })())
             ])
           ])
         ]),

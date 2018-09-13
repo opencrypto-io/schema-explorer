@@ -5,7 +5,8 @@ const Schema = require('./components/Schema')
 
 const root = document.getElementById('schema-explorer')
 
-const bundleUrl = window.location.hostname === 'localhost' ?
+const isLocal = window.location.hostname === 'localhost'
+const bundleUrl = isLocal ?
   '/schema/build/bundle.json' : 'https://schema.opencrypto.io/build/bundle.json'
 
 var loadedBundle = null
@@ -16,6 +17,7 @@ function bundle() {
     loadingBundle = true
     m.request(bundleUrl, { background: true }).then(data => {
       loadedBundle = data
+      loadedBundle.isLocal = isLocal
       loadingBundle = false
       console.log('Loaded from: %s', bundleUrl)
       m.redraw()
