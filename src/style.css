@@ -80,4 +80,18 @@ a.navbar-item:hover, a:hover {
   border-radius: 4px;
   padding: 1em;
 }
+
+h2.my-title { font-size: 2em; font-weight: bold; margin-bottom: 0.1em; padding-bottom: 0; }
+
+.path {
+  margin-bottom: 1.5em;
+  color: #999999;
+}
+.path a {
+  color: #999999;
+}
+.path a:hover {
+  text-decoration: underline;
+}
+
  

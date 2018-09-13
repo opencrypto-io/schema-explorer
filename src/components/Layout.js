@@ -1,16 +1,13 @@
 
 module.exports = {
-  oninit: () => {
-    this.schemaMap = null
-
-    const url = window.location.hostname === 'localhost' ?
-      '/schema/build/map.json' : 'https://schema.opencrypto.io/build/map.json'
-
-    m.request(url).then(data => {
-      this.schemaMap = data
-      console.log('Loaded from: %s', url)
+  oninit: (vnode) => {
+    this.bundle = vnode.attrs.bundle()
+  },
+  onupdate: (vnode) => {
+    if (this.bundle !== vnode.attrs.bundle()) {
+      this.bundle = vnode.attrs.bundle()
       m.redraw()
-    })
+    }
   },
   view: (vnode) => {
     return m('div', [
@@ -48,18 +45,44 @@ module.exports = {
                   m('a.navbar-item', { href: '/', oncreate: m.route.link, class: m.route.get() === '/' ? 'selected' : null }, 'Introduction'),
                   m('span.navbar-item', { style: 'font-size: 8px; color: silver;'  }, ' ● ')
                 ]
-                if (!this.schemaMap) {
+                if (!this.bundle) {
                   return arr
                 }
-                //console.log(schemaMap.models)
-                let models = Object.keys(this.schemaMap.models).map(mk => {
-                  let model = this.schemaMap.models[mk]
+                let allmodels = Object.keys(this.bundle.models)
+                let models = allmodels.filter((mk) => {
+                  let model = this.bundle.models[mk]
+                  return model.path.length < 3
+                }).map(mk => {
+                  let model = this.bundle.models[mk]
                   let href = `/model/${mk}`
                   return m('a.navbar-item', { href, oncreate: m.route.link, class: m.route.get() === href ? 'selected' : null }, model.name)
                 })
                 //console.log(models)
+                let omodels = allmodels.filter(mk => {
+                  let model = this.bundle.models[mk]
+                  return model.path.length >= 3
+                })
+                if (omodels.length > 0) {
+                  models.push(m('.navbar-item.has-dropdown.is-hoverable', [
+                    m('a.navbar-link', 'Other'),
+                    m('.navbar-dropdown', omodels.map(mk => {
+                      let model = this.bundle.models[mk]
+                      let href = `/model/${mk}`
+                      return m('a.navbar-item', { href, oncreate: m.route.link, class: m.route.get() === href ? 'selected' : null }, model.name)
+                    }))
+                  ]))
+                }
                 return arr.concat(models)
-              })())
+              })()),
+              m('.navbar-end', [
+                m('.navbar-item', [
+                  m('div.select.is-rounded', [
+                    m('select', [
+                      m('option', 'v0.9.1 (latest)')
+                    ])
+                  ])
+                ])
+              ])
             ])
           ])
         ]),

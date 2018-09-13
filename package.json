@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "npm run-script watch",
-    "build": "rm -rf docs && parcel build src/index.html -d docs && cp -r src/public/** docs",
+    "build": "rm -rf docs && parcel build src/index.html -d docs",
     "build-gitadd": "git add docs",
     "watch": "parcel src/index.html",
     "serve": "parcel serve src/index.html"
