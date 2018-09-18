@@ -6,17 +6,15 @@ var example = null
 
 module.exports = {
   oninit: (vnode) => {
-    this.bundle = vnode.attrs.bundle()
-    if (this.bundle) {
-      this.model = this.bundle.models[vnode.attrs.id]
-    }
-  },
-  onupdate: (vnode) => {
-    if (this.bundle !== vnode.attrs.bundle()) {
-      this.bundle = vnode.attrs.bundle()
+    this.bundlePromise = vnode.attrs.bundle()
+    this.bundlePromise.then((bundle) => {
+      this.bundle = bundle
       this.model = this.bundle.models[vnode.attrs.id]
       m.redraw()
-    } else if (this.model && this.model.id !== vnode.attrs.id) {
+    })
+  },
+  onupdate: (vnode) => {
+    if (this.model && this.model.id !== vnode.attrs.id) {
       this.model = this.bundle.models[vnode.attrs.id]
       m.redraw()
     }
@@ -27,7 +25,10 @@ module.exports = {
     }
     const schema = this.model.schema
     return m('div', [
-      m('h2.my-title', schema.title),
+      m('h2.my-title', [
+        schema['fa-icon'] ? m('i', { class: 'far fa-'+schema['fa-icon'], style: 'margin-right: 0.5em;' }) : null,
+        schema.title
+      ]),
       m('.path', this.model.path.map(p => {
         var out = [ m('a', { href: `/model/${p}`, oncreate: m.route.link }, this.bundle.models[p].name) ]
         if (p !== this.model.id) {

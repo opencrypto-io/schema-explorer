@@ -2,6 +2,12 @@ body {
   background: #F8F8F8;
 }
 
+.page-content a {
+  color: #00C718;
+}
+.page-content a:hover {
+  text-decoration: underline;
+}
 .green { 
   color: #00c718;
 }
@@ -94,4 +100,39 @@ h2.my-title { font-size: 2em; font-weight: bold; margin-bottom: 0.1em; padding-b
   text-decoration: underline;
 }
 
- 
+#homepage {
+  margin-top: 1em;
+}
+
+#homepage .oc-box {
+  color: #808080;
+}
+
+.oc-box {
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  box-shadow: 0 1px 6px 0 rgba(33,27,27,0.2);
+  margin-right: 3em;
+  margin-bottom: 1em;
+  padding: 1.5em;
+}
+
+ul.schema-structure li {
+  list-style: none;
+}
+
+ul.schema-structure.main {
+  margin-left: 0;
+}
+
+#changelog {
+  margin-top: 1em;
+}
+
+a.silent {
+  color: black;
+}
+a.silent:hover {
+  text-decoration: underline;
+}
+

@@ -1,13 +1,11 @@
 
 module.exports = {
   oninit: (vnode) => {
-    this.bundle = vnode.attrs.bundle()
-  },
-  onupdate: (vnode) => {
-    if (this.bundle !== vnode.attrs.bundle()) {
-      this.bundle = vnode.attrs.bundle()
+    this.bundlePromise = vnode.attrs.bundle()
+    this.bundlePromise.then((bundle) => {
+      this.bundle = bundle
       m.redraw()
-    }
+    })
   },
   view: (vnode) => {
     return m('div', [
@@ -42,7 +40,14 @@ module.exports = {
             m('.navbar-menu', [
               m('.navbar-start', (() => {
                 let arr = [
-                  m('a.navbar-item', { href: '/', oncreate: m.route.link, class: m.route.get() === '/' ? 'selected' : null }, 'Introduction'),
+                  m('a.navbar-item.has-dropdown.is-hoverable', [
+                    m('a.navbar-link', 'Documentation'),
+                    m('.navbar-dropdown', [
+                      m('a.navbar-item', { href: '/', oncreate: m.route.link, class: m.route.get() === '/' ? 'selected' : null }, 'Introduction'),
+                      m('.navbar-divider'),
+                      m('a.navbar-item', { href: '/changelog', oncreate: m.route.link, class: m.route.get() === '/changelog' ? 'selected' : null }, 'Changelog'),
+                    ])
+                  ]),
                   m('span.navbar-item', { style: 'font-size: 8px; color: silver;'  }, ' ● ')
                 ]
                 if (!this.bundle) {
@@ -64,7 +69,7 @@ module.exports = {
                 })
                 if (omodels.length > 0) {
                   models.push(m('.navbar-item.has-dropdown.is-hoverable', [
-                    m('a.navbar-link', 'Other'),
+                    m('a.navbar-link', 'Other models'),
                     m('.navbar-dropdown', omodels.map(mk => {
                       let model = this.bundle.models[mk]
                       let href = `/model/${mk}`
@@ -89,7 +94,7 @@ module.exports = {
             ])
           ])
         ]),
-        m('.container', function() {
+        m('.container.page-content', function() {
           if (true) {
             return m('#page', vnode.children)
           }
