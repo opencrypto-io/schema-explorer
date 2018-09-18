@@ -3,6 +3,7 @@ const Layout = require('./components/Layout')
 const Homepage = require('./components/Homepage')
 const Schema = require('./components/Schema')
 const Changelog = require('./components/Changelog')
+const Search = require('./components/Search')
 
 const root = document.getElementById('schema-explorer')
 
@@ -38,4 +39,5 @@ m.route(root, '/', {
   '/': { render: (vnode) => m(Layout, { bundle }, m(Homepage, { bundle })) },
   '/model/:id': { render: (vnode) => m(Layout, { bundle }, m(Schema, { bundle, id: vnode.attrs.id })) },
   '/changelog': { render: (vnode) => m(Layout, { bundle }, m(Changelog, { bundle })) },
+  '/search/:q': { render: (vnode) => m(Layout, { bundle, q: vnode.attrs.q }, m(Search, { bundle, q: vnode.attrs.q })) },
 })

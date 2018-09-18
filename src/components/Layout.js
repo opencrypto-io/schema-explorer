@@ -1,11 +1,43 @@
 
+let savedRoute = null
+let searchq = null
+
+const setSearch = (value) => {
+  searchq = value
+  value = value.trim()
+  if (value === "") {
+    if (savedRoute) {
+      m.route.set(savedRoute)
+    }
+    return null
+  }
+  const current = m.route.get()
+  if (!current.startsWith('/search/') || savedRoute === null) {
+    savedRoute = current
+  }
+  m.route.set(`/search/${encodeURI(value)}`)
+}
+
 module.exports = {
   oninit: (vnode) => {
+    if (vnode.attrs.q) {
+      searchq = vnode.attrs.q
+    }
     this.bundlePromise = vnode.attrs.bundle()
     this.bundlePromise.then((bundle) => {
       this.bundle = bundle
       m.redraw()
     })
+  },
+  onupdate: (vnode) => {
+    if (searchq) {
+      setTimeout(() => {
+        if (!m.route.get().startsWith('/search/')) {
+          searchq = ''
+          m.redraw()
+        }
+      }, 100)
+    }
   },
   view: (vnode) => {
     return m('div', [
@@ -48,7 +80,9 @@ module.exports = {
                       m('a.navbar-item', { href: '/changelog', oncreate: m.route.link, class: m.route.get() === '/changelog' ? 'selected' : null }, 'Changelog'),
                     ])
                   ]),
-                  m('span.navbar-item', { style: 'font-size: 8px; color: silver;'  }, ' ● ')
+                  //m('span.navbar-item', { style: 'font-size: 8px; color: silver;'  }, ' ● '),
+                  m('.navbar-item', m('input.input.is-rounded', { placeholder: 'Search for prop ..', style: 'width: 10em;', oninput: m.withAttr('value', setSearch), value: searchq })),
+                  //m('span.navbar-item', { style: 'font-size: 8px; color: silver;'  }, ' ● '),
                 ]
                 if (!this.bundle) {
                   return arr

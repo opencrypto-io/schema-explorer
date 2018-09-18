@@ -136,3 +136,6 @@ a.silent:hover {
   text-decoration: underline;
 }
 
+#search .sf {
+  background-color: yellow;
+}
