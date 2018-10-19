@@ -46,7 +46,7 @@ module.exports = {
             m('i', { style: 'padding-left: 0.5em; color: #999999;' }, '{' +po.type + '}')
           ]),
           po.title ? m('div', { style: 'color: #999999;' }, po.title + (po.description ? ' - ' + po.description : '')) : null,
-          this.model.example[pk] ? m('pre.example', JSON.stringify(this.model.example[pk], null, 2)) : null,
+          this.model.example[pk] ? m('pre.example', jsyaml.dump(this.model.example[pk])) : null,
         ])
       }))
     ])

@@ -61,8 +61,7 @@ module.exports = {
                 m('a.navbar-item.current', { href: 'https://schema.opencrypto.io' }, 'Schema'), 
               ]),
               m('.navbar-end', [
-                m('a.navbar-item', { href: '#' }, 'How to contribute?'), 
-                m('a.navbar-item', { href: '#' }, 'FAQ'), 
+                m('a.navbar-item', { href: 'https://data.opencrypto.io/#how-to-use-contribute' }, 'How to contribute?'),
               ])
             ])
           ])
